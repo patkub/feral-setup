@@ -1,0 +1,60 @@
+---
+- name: Setup Feral Seedbox
+  hosts: "{{ feral_server }}"
+  remote_user: "{{ feral_username }}"
+  vars:
+    # base path to install to
+    install_path: ~/
+  
+  tasks:
+  - name: Creating binary directory
+    file: path="{{ install_path }}/bin" state=directory
+    tags:
+      - setup
+  
+  - name: Getting Feral restart script
+    get_url:
+      url: https://git.io/5Uw8Gw
+      dest: "{{ install_path }}/bin/restart"
+      mode: 0755
+    tags:
+      - restart-script
+  
+  - name: Getting rclone
+    unarchive:
+      src: https://downloads.rclone.org/rclone-current-linux-amd64.zip
+      remote_src: yes
+      dest: "{{ install_path }}/bin"
+    tags:
+      - rclone
+  
+  - name: Finding rclone path
+    find:
+      paths: "{{ install_path }}/bin"
+      patterns: "rclone-*-linux-amd64"
+      file_type: directory
+    register: files_matched
+    tags:
+      - rclone
+  
+  - debug:
+      var: files_matched.files[0].path
+      tags:
+        - rclone
+  
+  # add rclone to path
+  - name: Adding {{ files_matched.files[0].path }} to PATH
+    lineinfile:
+      dest=~/.bashrc
+      state=present
+      backrefs=no
+      insertafter="^export PATH"
+      line="export PATH={{ files_matched.files[0].path }}:$PATH"
+    tags:
+      - rclone
+  
+  - name: Installing speedtest-cli
+    command: pip install speedtest-cli
+    tags:
+      - speedtest-cli
+
