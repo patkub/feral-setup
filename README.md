@@ -2,7 +2,7 @@
 
 > Ansible playbook for setting up Feral server.
 
-Usage:
+### Usage:
 
 ```sh
 ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_username=[username]" --tags "tag1[,tag2...]"
