@@ -7,52 +7,96 @@
     install_path: ~/
   
   tasks:
+  # setup
   - name: Creating binary directory
     file: path="{{ install_path }}/bin" state=directory
     tags:
       - setup
   
+  # restart-script
   - name: Getting Feral restart script
     get_url:
       url: https://git.io/5Uw8Gw
       dest: "{{ install_path }}/bin/restart"
-      mode: 0755
+      mode: 0700
     tags:
       - restart-script
   
+  # rclone
   - name: Getting rclone
     unarchive:
       src: https://downloads.rclone.org/rclone-current-linux-amd64.zip
       remote_src: yes
-      dest: "{{ install_path }}/bin"
+      dest: "{{ install_path }}"
+      mode: 0700
     tags:
       - rclone
-  
+
   - name: Finding rclone path
     find:
-      paths: "{{ install_path }}/bin"
+      paths: "{{ install_path }}"
       patterns: "rclone-*-linux-amd64"
       file_type: directory
     register: files_matched
     tags:
       - rclone
-  
-  - debug:
-      var: files_matched.files[0].path
-      tags:
-        - rclone
-  
-  # add rclone to path
-  - name: Adding {{ files_matched.files[0].path }} to PATH
-    lineinfile:
-      dest=~/.bashrc
-      state=present
-      backrefs=no
-      insertafter="^export PATH"
-      line="export PATH={{ files_matched.files[0].path }}:$PATH"
+
+  - name: Installing rclone from {{ files_matched.files[0].path }}
+    copy:
+      src: "{{ files_matched.files[0].path }}/rclone"
+      remote_src: yes
+      dest: "{{ install_path }}/bin"
+      mode: 0700
     tags:
       - rclone
+
+  - name: Removing {{ files_matched.files[0].path }}
+    file:
+      state: absent
+      path: "{{ files_matched.files[0].path }}"
+    tags:
+      - rclone
+
+  # ffmpeg
+  - name: Getting ffmpeg
+    unarchive:
+      src: https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz
+      remote_src: yes
+      dest: "{{ install_path }}"
+    tags:
+      - ffmpeg
   
+  - name: Finding ffmpeg path
+    find:
+      paths: "{{ install_path }}"
+      patterns: "ffmpeg-*-64bit-static"
+      file_type: directory
+    register: files_matched
+    tags:
+      - ffmpeg
+  
+  - name: Installing ffmpeg from {{ files_matched.files[0].path }}
+    copy:
+      src: "{{ files_matched.files[0].path }}/{{ item }}"
+      remote_src: yes
+      dest: "{{ install_path }}/bin"
+      mode: 0700
+    with_items:
+      - "ffmpeg"
+      - "ffprobe"
+      - "ffmpeg-10bit"
+      - "qt-faststart"
+    tags:
+      - ffmpeg
+  
+  - name: Removing {{ files_matched.files[0].path }}
+    file:
+      state: absent
+      path: "{{ files_matched.files[0].path }}"
+    tags:
+      - ffmpeg
+  
+  # speedtest-cli
   - name: Installing speedtest-cli
     command: pip install speedtest-cli
     tags:

@@ -15,5 +15,6 @@ ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_usern
 | setup  				  | Initial setup            |
 | restart-script  | Get Feral restart script |
 | rclone          | Install rclone           |
+| ffmpeg          | Install ffmpeg           |
 | speedtest-cli   | Install speedtest-cli		 |
 
