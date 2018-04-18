@@ -18,3 +18,14 @@ ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_usern
 | ffmpeg          | Install ffmpeg           |
 | speedtest-cli   | Install speedtest-cli		 |
 
+### Bash Script
+
+Installs [h5ai](https://larsjung.de/h5ai/), symlinks rtorrent data, and copies nginx configs.
+
+Copy `feral-setup` directory to `~/` and run:
+
+```bash
+cd ~/feral-setup
+chmod +x setup.sh
+./setup.sh
+```
