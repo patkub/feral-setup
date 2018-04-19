@@ -17,6 +17,7 @@ ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_usern
 | rclone          | Install rclone           |
 | ffmpeg          | Install ffmpeg           |
 | speedtest-cli   | Install speedtest-cli		 |
+| h5ai            | Install h5ai        		 |
 
 ### Bash Script
 

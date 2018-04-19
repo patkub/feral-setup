@@ -102,3 +102,22 @@
     tags:
       - speedtest-cli
 
+  # h5ai
+  - shell: hostname -f
+    register: hostname
+    tags:
+      - h5ai
+
+  - name: Creating h5ai directory
+    file: path="~/www/{{ ansible_env.USER }}.{{ hostname.stdout }}/public_html/_h5ai" state=directory
+    tags:
+      - h5ai
+
+  - name: Getting h5ai
+    unarchive:
+      src: http://git.io/vEMGv
+      remote_src: yes
+      dest: "~/www/{{ ansible_env.USER }}.{{ hostname.stdout }}/public_html/_h5ai"
+    tags:
+      - h5ai
+
