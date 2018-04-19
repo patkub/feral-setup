@@ -102,6 +102,12 @@
     tags:
       - speedtest-cli
 
+  # nginx
+  - name: Replacing Apache with NGINX
+    file: path="{{ install_path }}/.nginx" state=directory
+    tags:
+      - nginx
+
   # h5ai
   - shell: hostname -f
     register: hostname

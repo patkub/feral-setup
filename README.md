@@ -10,14 +10,15 @@ ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_usern
 
 ### Available tags
 
-| Tag  					  | Description		           |
-| --------------- | ------------------------ |
-| setup  				  | Initial setup            |
-| restart-script  | Get Feral restart script |
-| rclone          | Install rclone           |
-| ffmpeg          | Install ffmpeg           |
-| speedtest-cli   | Install speedtest-cli		 |
-| h5ai            | Install h5ai        		 |
+| Tag  					  | Description		            |
+| --------------- | ------------------------- |
+| setup  				  | Initial setup             |
+| restart-script  | Get Feral restart script  |
+| rclone          | Install rclone            |
+| ffmpeg          | Install ffmpeg            |
+| speedtest-cli   | Install speedtest-cli		  |
+| nginx           | Replace Apache with nginx |
+| h5ai            | Install h5ai        		  |
 
 ### Bash Script
 
