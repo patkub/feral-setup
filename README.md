@@ -22,7 +22,7 @@ ansible-playbook feral-setup.yml --extra-vars "feral_server=[server] feral_usern
 
 ### Bash Script
 
-Installs [h5ai](https://larsjung.de/h5ai/), symlinks rtorrent data, and copies nginx configs.
+Setup Feral restart script, rclone, ffmpeg, speedtest-cli, nginx, [h5ai](https://larsjung.de/h5ai/), symlinks rtorrent data, and copies nginx configs.
 
 Copy `feral-setup` directory to `~/` and run:
 
