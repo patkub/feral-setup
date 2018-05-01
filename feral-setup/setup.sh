@@ -94,6 +94,12 @@ nginx_copy_configs() {
   cp -r .nginx/. ~/.nginx
 }
 
+bashrc_copy() {
+  # Copy bashrc
+  echo "${yellow}Copying .bashrc${reset}"
+  cp .bashrc ~/
+}
+
 print_header
 setup
 restart_script
@@ -105,5 +111,6 @@ h5ai_install
 h5ai_copy_configs
 h5ai_symlink_rtorrent_data
 nginx_copy_configs
+bashrc_copy
 
 echo "${green}Done!${reset}"
