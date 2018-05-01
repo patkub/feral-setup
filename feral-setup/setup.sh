@@ -29,10 +29,12 @@ restart_script() {
   # get Feral restart script
   echo "${yellow}Getting Feral restart script${reset}"
   wget -qO ~/bin/restart http://git.io/5Uw8Gw
+  chmod 700 ~/bin/restart
 }
 
 rclone_install() {
   # get rclone
+  echo "${yellow}Getting rclone${reset}"
   wget -qO rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip
   unzip rclone.zip
   mv rclone-v*-linux-amd64/rclone ~/bin
@@ -41,8 +43,10 @@ rclone_install() {
 
 ffmpeg_install() {
   # get ffmpeg
+  echo "${yellow}Getting ffmpeg${reset}"
   wget -qO ffmpeg.tar.gz https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz
-  tar xf ffmpeg.tar.gz && rm -rf ffmpeg-*-64bit-static/{manpages,presets,readme.txt}
+  tar xf ffmpeg.tar.gz
+  rm -rf ffmpeg-*-64bit-static/{manpages,model,readme.txt}
   cp ffmpeg-*-64bit-static/* ~/bin
   chmod 700 ~/bin/{ffmpeg,ffprobe,ffmpeg-10bit,qt-faststart}
   rm -rf ffmpeg{.tar.gz,-*-64bit-static}
